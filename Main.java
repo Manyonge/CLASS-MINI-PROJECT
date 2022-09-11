@@ -8,7 +8,6 @@ public class Main {
     static Sneakers createSneaker() {
         System.out.println("Enter Sneaker Name: ");
         String name = scanner.nextLine();
-        scanner.nextLine();
         System.out.println("Enter Sneaker Size: ");
         int size = scanner.nextInt();
         scanner.nextLine();
@@ -17,18 +16,11 @@ public class Main {
         int bp = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter Sneaker buying date: ");
-        String bd = scanner.nextLine();
-        scanner.nextLine();
-
         System.out.println("Enter Sneaker selling price: ");
         int sp = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter Sneaker selling date: ");
-        String sd = scanner.nextLine();
-        scanner.nextLine();
-        Sneakers newSneaker = new Sneakers(name, size, bp, bd, sp, sd);
+        Sneakers newSneaker = new Sneakers(name, size, bp, sp);
 
         System.out.println("New Sneaker record created");
         return newSneaker;
@@ -38,7 +30,6 @@ public class Main {
     static Jeans createJeans() {
         System.out.println("Enter Jeans Name: ");
         String name = scanner.nextLine();
-        scanner.nextLine();
         System.out.println("Enter Jeans Size: ");
         int size = scanner.nextInt();
         scanner.nextLine();
@@ -47,33 +38,17 @@ public class Main {
         int bp = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter Jeans buying date: ");
-        String bd = scanner.nextLine();
-        scanner.nextLine();
-
         System.out.println("Enter Jeans selling price: ");
         int sp = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.println("Enter Jeans selling date: ");
-        String sd = scanner.nextLine();
-        scanner.nextLine();
-        Jeans newJeans = new Jeans(name, size, bp, bd, sp, sd);
+        Jeans newJeans = new Jeans(name, size, bp, sp);
 
         System.out.println("New Jeans record created");
         return newJeans;
     }
 
-    public static void main(String args[]) {
-
-        System.out.println("___Business Records Management System___");
-        System.out.println("");
-        System.out.println("Create a new sneaker record");
-        Sneakers newSneaker = createSneaker();
-        System.out.println("Create a new jeans record");
-        Jeans newJeans = createJeans();
-        System.out.println();
-        System.out.println("");
+    static void menu(Sneakers newSneaker, Jeans newJeans) {
         System.out.println("");
         System.out.println("___Choose an action to execute___");
         System.out.println("1.Show total cost incurred.");
@@ -90,9 +65,34 @@ public class Main {
                 // demonstration of parameter passing and referencing
                 int totalBuying = evaluator.totalCost(newSneaker, newJeans);
                 System.out.println("Total money spent is " + totalBuying);
-                break;
-
+                menu(newSneaker, newJeans);
+            case 2:
+                // demonstration of passing by reference
+                int sneakerProfit = evaluator.profitCalculator(newSneaker.buyingPrice, newSneaker.sellingPrice);
+                int jeansProfit = evaluator.profitCalculator(newJeans.buyingPrice, newJeans.sellingPrice);
+                int totalProfit = jeansProfit + sneakerProfit;
+                System.out.println("Sneaker profit was KES " + sneakerProfit + " & Jeans profit was" + jeansProfit);
+                System.out.println("Total profit made was: KES" + totalProfit);
+                menu(newSneaker, newJeans);
+            case 3:
+                newSneaker.showDetails();
+                menu(newSneaker, newJeans);
+            case 4:
+                newJeans.showDetails();
+                menu(newSneaker, newJeans);
         }
+    }
 
+    public static void main(String args[]) {
+
+        System.out.println("___Business Records Management System___");
+        System.out.println("");
+        System.out.println("Create a new sneaker record");
+        Sneakers newSneaker = createSneaker();
+        System.out.println("Create a new jeans record");
+        Jeans newJeans = createJeans();
+        System.out.println();
+        System.out.println("");
+        menu(newSneaker, newJeans);
     }
 }
